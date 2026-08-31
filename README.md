@@ -2,7 +2,7 @@
 
 Power BI dashboard 5 trang + phân tích nghiệp vụ đa chiều (multi-dimensional driver analysis) trên 20.000 giao dịch ngân hàng — đi từ làm sạch dữ liệu Excel, xây model, viết DAX, đến khuyến nghị hành động cụ thể được kiểm chứng bằng query trực tiếp trên model, có AI hỗ trợ.
 
-Mở `banking.pbip` bằng Power BI Desktop để xem dashboard đầy đủ — xem Mục 6 (Cách setup) để biết cách trỏ lại nguồn dữ liệu.
+**Xem nhanh:** mở [`banking.pbix`](banking.pbix) bằng Power BI Desktop — dữ liệu đã nhúng sẵn, không cần setup gì thêm. Muốn xem cấu trúc model/report dạng file rời (TMDL/PBIR) để chỉnh sửa, dùng `banking.pbip` — xem Mục 6 (Cách setup).
 
 ## 1. Bối cảnh vấn đề
 
@@ -135,7 +135,15 @@ Mọi insight ở Mục 3 đều bắt nguồn từ một query DAX cross-tab đ
 
 ## 6. Cách setup
 
-Yêu cầu **Power BI Desktop** bản hỗ trợ định dạng PBIP (Power BI Project).
+Yêu cầu **Power BI Desktop**. Repo có 2 cách mở, tùy mục đích:
+
+### Cách A — Xem nhanh (khuyến nghị cho recruiter)
+
+Mở thẳng [`banking.pbix`](banking.pbix) bằng Power BI Desktop. Dữ liệu đã nhúng sẵn trong file (`DataModel` đóng gói kèm), **không cần refresh hay trỏ lại nguồn dữ liệu** — mở lên là xem được dashboard đầy đủ ngay. Ở mỗi trang, chọn Currency = EUR (mặc định) trước khi đọc số — không chọn cả EUR lẫn USD cùng lúc.
+
+### Cách B — Mở dạng PBIP để chỉnh sửa model/report
+
+Dùng khi cần sửa DAX, thêm visual, hoặc xem cấu trúc file rời (TMDL/PBIR) thay vì file nhị phân.
 
 > **Lưu ý:** file Excel nguồn đã làm sạch (**[`data/Banking_Transactional_Dataset_Cleaned.xlsx`](data/Banking_Transactional_Dataset_Cleaned.xlsx)**) được đóng gói kèm repo — đây là dữ liệu tổng hợp/giả lập (synthetic), không phải dữ liệu khách hàng thật, nên an toàn để public. Power Query trong model hiện vẫn đang trỏ tới đường dẫn cục bộ trên máy dùng để build project (`C:\Users\...\Downloads\...`), nên sau khi clone, bước 2 dưới đây **sẽ báo lỗi refresh cho tới khi bạn trỏ lại đường dẫn** — trỏ về đúng file đã có sẵn trong `data/`.
 
@@ -149,6 +157,8 @@ Yêu cầu **Power BI Desktop** bản hỗ trợ định dạng PBIP (Power BI P
 ```
 
 Nếu dùng dữ liệu khách hàng thật cho một project khác (không phải bản demo này), không commit file Excel nguồn hoặc dữ liệu khách hàng thật lên git nếu repo public.
+
+> **Lưu ý khi cập nhật:** `banking.pbix` là bản export tĩnh tại một thời điểm — nếu sau này chỉnh sửa model/report qua `banking.pbip`, nhớ export lại `.pbix` (File → Save As → Power BI files) để 2 bản không bị lệch nhau.
 
 ## 7. Guardrails phát triển
 
