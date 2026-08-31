@@ -154,8 +154,11 @@ Nếu dùng dữ liệu khách hàng thật cho một project khác (không ph�
 
 Các nguyên tắc này bảo vệ khỏi những sự cố từng xảy ra thật trong lúc build:
 - Không `SUM(Amount)` gộp cả `EUR` và `USD` trong cùng 1 phép tính — luôn lọc theo `Currency` trước.
+- Currency slicer luôn mặc định EUR và single-select — không đổi sang multi-select, vì sẽ phá vỡ nguyên tắc "không gộp tiền tệ" ở trên.
 - `CustomerScore`/`CreditScoreGroup` không được dùng làm cơ sở cho bất kỳ insight nào về hành vi khách hàng ổn định — field này ở cấp giao dịch, không phải cấp khách hàng.
 - `Total Fee` đã được tính sẵn ở Excel; không tính lại bằng DAX (đã verify diff = 0, tính lại chỉ tạo thêm rủi ro sai lệch).
+- Sau khi refresh model với dữ liệu mới, đối chiếu lại vài mốc tổng (Total Transactions, Total Transaction Value, Total Fees) trước khi công bố số liệu — phát hiện sớm nếu refresh bị lỗi hoặc dữ liệu nguồn có vấn đề.
+- Không đổi thiết kế `RecommendedOffer` → `CustomerSegment` (segment-exclusive) mà không cập nhật lại phân tích Offer Alignment liên quan — toàn bộ Insight về offer alignment trong Mục 3 dựa trên giả định 1-offer-1-segment.
 
 ## 8. Định hướng phát triển và scale-up
 
