@@ -1,0 +1,300 @@
+table FactTransaction
+	lineageTag: 27836ee3-b556-44cf-8c18-efd09f1d9741
+
+	measure 'Total Transactions' = COUNTROWS(FactTransaction)
+		formatString: #,##0
+		displayFolder: Core KPIs
+
+	measure 'Total Transaction Value' = SUM(FactTransaction[Amount])
+		formatString: #,##0
+		displayFolder: Core KPIs
+
+	measure 'Total Fees' = SUM(FactTransaction[Total Fee])
+		formatString: #,##0
+		displayFolder: Core KPIs
+
+	measure 'Average Transaction Value' = DIVIDE([Total Transaction Value], [Total Transactions])
+		formatString: #,##0.00
+		displayFolder: Core KPIs
+
+	measure 'Average Fee' = DIVIDE([Total Fees], [Total Transactions])
+		formatString: #,##0.00
+		displayFolder: Core KPIs
+
+	measure 'Active Customers' = DISTINCTCOUNT(FactTransaction[CustomerID])
+		formatString: #,##0
+		displayFolder: Core KPIs
+
+	measure 'Transactions per Customer' = DIVIDE([Total Transactions], [Active Customers])
+		formatString: #,##0.0
+		displayFolder: Core KPIs
+
+	measure 'Average Customer Score' = AVERAGE(FactTransaction[CustomerScore])
+		formatString: #,##0
+		displayFolder: Core KPIs
+
+	measure 'Credit Card Fees' = SUM(FactTransaction[CreditCardFees])
+		formatString: #,##0
+		displayFolder: Fee Breakdown
+
+	measure 'Insurance Fees' = SUM(FactTransaction[InsuranceFees])
+		formatString: #,##0
+		displayFolder: Fee Breakdown
+
+	measure 'Late Payment Amount' = SUM(FactTransaction[LatePaymentAmount])
+		formatString: #,##0
+		displayFolder: Fee Breakdown
+
+	measure 'Total Transaction Value PM' = CALCULATE([Total Transaction Value], DATEADD(DimDate[Date], -1, MONTH))
+		formatString: #,##0
+		isHidden
+		displayFolder: Time Intelligence\Helpers
+
+	measure 'Total Transaction Value PY' = CALCULATE([Total Transaction Value], SAMEPERIODLASTYEAR(DimDate[Date]))
+		formatString: #,##0
+		isHidden
+		displayFolder: Time Intelligence\Helpers
+
+	measure 'Transactions PM' = CALCULATE([Total Transactions], DATEADD(DimDate[Date], -1, MONTH))
+		formatString: #,##0
+		isHidden
+		displayFolder: Time Intelligence\Helpers
+
+	measure 'MoM Growth %' = DIVIDE([Total Transaction Value] - [Total Transaction Value PM], [Total Transaction Value PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligence
+
+	measure 'YoY Growth %' = DIVIDE([Total Transaction Value] - [Total Transaction Value PY], [Total Transaction Value PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligence
+
+	measure 'Transaction Growth %' = DIVIDE([Total Transactions] - [Transactions PM], [Transactions PM])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligence
+
+	measure 'Fee Rate %' = DIVIDE([Total Fees], [Total Transaction Value])
+		formatString: 0.00%
+		displayFolder: Analytical %
+
+	measure 'Fee Contribution %' = DIVIDE([Total Fees], CALCULATE([Total Fees], ALLSELECTED(FactTransaction)))
+		formatString: 0.0%
+		displayFolder: Analytical %
+
+	measure 'Transaction Share %' = DIVIDE([Total Transactions], CALCULATE([Total Transactions], ALLSELECTED(FactTransaction)))
+		formatString: 0.0%
+		displayFolder: Analytical %
+
+	measure 'Offer Alignment Rate %' = AVERAGE(FactTransaction[OfferAligned])
+		formatString: 0.0%
+		displayFolder: Analytical %
+
+	measure 'Most Used Channel' = VAR t = TOPN(1, VALUES(FactTransaction[Channel]), CALCULATE([Total Transactions]), DESC) RETURN CONCATENATEX(t, FactTransaction[Channel])
+		formatString: General
+		displayFolder: Convenience
+
+	measure 'Most Valuable Transaction Type' = VAR t = TOPN(1, VALUES(FactTransaction[TransactionType]), CALCULATE([Total Transaction Value]), DESC) RETURN CONCATENATEX(t, FactTransaction[TransactionType])
+		formatString: General
+		displayFolder: Convenience
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: df383908-c2b2-4444-8f44-9d3e12565653
+		summarizeBy: count
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7f1b7a07-e3a1-44cb-9852-6609a6f5c14c
+		summarizeBy: none
+		sourceColumn: TransactionDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionType
+		dataType: string
+		lineageTag: efe8b738-c6ae-4fcc-990b-a519b7b3ad29
+		summarizeBy: none
+		sourceColumn: TransactionType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: e70f1dda-0273-48fd-9344-8ffbe9f44dae
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ProductCategory
+		dataType: string
+		lineageTag: 7ac55204-f8ac-453a-834f-1516f3c6ad4a
+		summarizeBy: none
+		sourceColumn: ProductCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductSubcategory
+		dataType: string
+		lineageTag: 387fe490-fefd-41b9-a328-9a9e3662c13f
+		summarizeBy: none
+		sourceColumn: ProductSubcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column BranchCity
+		dataType: string
+		lineageTag: d830a478-0c04-4c58-adff-1a666244e0fe
+		summarizeBy: none
+		sourceColumn: BranchCity
+
+		annotation SummarizationSetBy = Automatic
+
+	column BranchLat
+		dataType: double
+		lineageTag: 8e550201-b342-4ddb-8b2b-57210fc89f8e
+		summarizeBy: sum
+		sourceColumn: BranchLat
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BranchLong
+		dataType: double
+		lineageTag: dc84d876-3d17-4da0-a5ef-712de8fb663e
+		summarizeBy: sum
+		sourceColumn: BranchLong
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Channel
+		dataType: string
+		lineageTag: f18e6511-9864-475c-bb3d-4cd2136f3c61
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Currency
+		dataType: string
+		lineageTag: 43e2d28e-b296-41da-ad56-e6a28b1c5b8b
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreditCardFees
+		dataType: double
+		lineageTag: 2b327f68-58ba-4d57-ad89-111b37c9af10
+		summarizeBy: sum
+		sourceColumn: CreditCardFees
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column InsuranceFees
+		dataType: double
+		lineageTag: 2ebefd56-629b-4f72-b8b2-abada9cd9dff
+		summarizeBy: sum
+		sourceColumn: InsuranceFees
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LatePaymentAmount
+		dataType: double
+		lineageTag: 70cc474f-cbf4-45f1-90d6-c97db209cfcf
+		summarizeBy: sum
+		sourceColumn: LatePaymentAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CustomerScore
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a15d634-923c-4dfa-9f2e-6743371d7dfd
+		summarizeBy: sum
+		sourceColumn: CustomerScore
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthlyIncome
+		dataType: double
+		lineageTag: d8740684-4c00-49ce-84ac-94b15a06d43d
+		summarizeBy: sum
+		sourceColumn: MonthlyIncome
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CustomerSegment
+		dataType: string
+		lineageTag: fc2fe37c-4987-48d6-8485-12d89043cd1f
+		summarizeBy: none
+		sourceColumn: CustomerSegment
+
+		annotation SummarizationSetBy = Automatic
+
+	column RecommendedOffer
+		dataType: string
+		lineageTag: 3e350f7c-9768-4f02-ae57-ee92311c0f78
+		summarizeBy: none
+		sourceColumn: RecommendedOffer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Fee'
+		dataType: double
+		lineageTag: 29508ad9-0af2-4cd0-b7e9-6ea6efde5388
+		summarizeBy: sum
+		sourceColumn: Total Fee
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CreditScoreGroup = SWITCH(TRUE(), FactTransaction[CustomerScore] < 580, "Poor", FactTransaction[CustomerScore] < 670, "Fair", FactTransaction[CustomerScore] < 740, "Good", FactTransaction[CustomerScore] < 800, "Very Good", "Excellent")
+		dataType: string
+		lineageTag: e2f5e8b2-d863-4c2e-8956-c32b086457e0
+
+	column IncomeGroup = SWITCH(TRUE(), FactTransaction[MonthlyIncome] < 3500, "Low Income", FactTransaction[MonthlyIncome] < 7000, "Middle Income", "High Income")
+		dataType: string
+		lineageTag: 43e93a1d-14f1-4fc6-a436-91339fe0323c
+
+	column OfferExpectedCategory = RELATED(MapOfferCategory[ExpectedCategory])
+		dataType: string
+		lineageTag: 6bf4aad3-6547-4dee-b0b3-9dbbc1daff0d
+
+	column OfferAligned = IF(FactTransaction[ProductCategory] = FactTransaction[OfferExpectedCategory], 1, 0)
+		dataType: int64
+		lineageTag: d8dcd5ff-fe58-4d5d-b53c-d8930cf90697
+
+	partition FactTransaction = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\Admin\Downloads\Banking_Transactional_Dataset_Cleaned.xlsx"), null, true),
+				    Banking_Transactions_Table = Source{[Item="Banking_Transactions",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Banking_Transactions_Table,{{"TransactionID", Int64.Type}, {"CustomerID", Int64.Type}, {"TransactionDate", type datetime}, {"Year", Int64.Type}, {"Month", Int64.Type}, {"MonthName", type text}, {"Quarter", Int64.Type}, {"YearMonth", type date}, {"TransactionType", type text}, {"Amount", type number}, {"ProductCategory", type text}, {"ProductSubcategory", type text}, {"BranchCity", type text}, {"BranchLat", type number}, {"BranchLong", type number}, {"Channel", type text}, {"Currency", type text}, {"CreditCardFees", type number}, {"InsuranceFees", type number}, {"LatePaymentAmount", type number}, {"CustomerScore", Int64.Type}, {"MonthlyIncome", type number}, {"CustomerSegment", type text}, {"RecommendedOffer", type text}, {"Total Fee", type number}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"TransactionID", "Year", "Month", "MonthName", "Quarter", "YearMonth"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

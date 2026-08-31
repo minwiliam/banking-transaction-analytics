@@ -1,0 +1,40 @@
+table MapOfferCategory
+	lineageTag: 849aee3a-a0af-4735-aa80-e2e1cabe1f90
+
+	column RecommendedOffer
+		dataType: string
+		lineageTag: 4700ac11-eec5-4c96-b835-8fe11a79d15d
+		sourceColumn: RecommendedOffer
+
+	column ExpectedCategory
+		dataType: string
+		lineageTag: 7d7a102b-2f84-4bc5-a9c0-041b902be916
+		sourceColumn: ExpectedCategory
+
+	column MatchShare
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 1c7977d3-80bf-4efb-aed2-bd5d76274fbd
+		sourceColumn: MatchShare
+
+	partition MapOfferCategory = m
+		mode: import
+		source =
+				let
+				    Source = #table(
+				        type table[RecommendedOffer = text, ExpectedCategory = text, MatchShare = number],
+				        {
+				            {"Gold Card With Travel Benefits", "Credit Card", 1.000},
+				            {"No-Fee Basic Account", "Savings Account", 1.000},
+				            {"Personal Loan Cashback Offer", "Loan", 1.000},
+				            {"Exclusive Platinum Package", "Credit Card", 0.504},
+				            {"Financial Literacy Program Access", "Checking Account", 0.256},
+				            {"Mid-Tier Savings Booster", "Mortgage", 0.344},
+				            {"Premium Investment Services", "Savings Account", 0.343}
+				        }
+				    )
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

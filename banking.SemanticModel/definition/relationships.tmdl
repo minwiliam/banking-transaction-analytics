@@ -1,0 +1,13 @@
+relationship 88fbf793-4d39-40b8-8a9a-bb1392b3d9a5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Date
+	toColumn: LocalDateTable_4c0329db-c951-407d-9c12-684193f974e2.Date
+
+relationship 21439cea-d0a0-6079-7f6b-407fbf8b06bc
+	fromColumn: FactTransaction.TransactionDate
+	toColumn: DimDate.Date
+
+relationship FactTransaction_RecommendedOffer_MapOfferCategory_RecommendedOffer
+	fromColumn: FactTransaction.RecommendedOffer
+	toColumn: MapOfferCategory.RecommendedOffer
+

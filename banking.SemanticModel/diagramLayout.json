@@ -1,0 +1,61 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 268.79998779296807,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 818.79997253418117,
+            "y": 53.999999999999993
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "6bb62039-a77e-4b40-842c-17e3e4fb488f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 549.39999389648654,
+            "y": 193.99999999999952
+          },
+          "nodeIndex": "FactTransaction",
+          "nodeLineageTag": "27836ee3-b556-44cf-8c18-efd09f1d9741",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 0
+          },
+          "nodeIndex": "MapOfferCategory",
+          "nodeLineageTag": "849aee3a-a0af-4735-aa80-e2e1cabe1f90",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100.00000000000024,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
