@@ -18,19 +18,13 @@ Dữ liệu gốc là **một file Excel export duy nhất** — 20.000 dòng gi
 
 Nếu build thẳng dashboard trên dữ liệu thô, các con số như tổng doanh thu, fee rate theo phân khúc hay "kênh nào tốt nhất" vẫn trông hợp lý — nhưng sai bản chất, hoặc tệ hơn là suy diễn nhân quả (causal) từ dữ liệu chỉ mang tính quan sát (correlation).
 
-Ngoài vấn đề dữ liệu, quá trình build còn gặp 1 sự cố vận hành đáng ghi lại vì có thể lặp lại với bất kỳ ai dùng Power BI Desktop dài ngày cho một project:
-
-- **Mất toàn bộ 22 DAX measures sau khi restart Desktop** — do measure được tạo qua phiên làm việc live (MCP) nhưng chưa từng được ghi lại vào file model (TMDL) trên đĩa.
-
-Đây không phải lỗi dữ liệu, mà là rủi ro thật của quy trình làm việc — được ghi lại thành guardrail ở Mục 7.
-
 ## 2. Solution này là gì
 
 Solution gồm ba phần:
 
 - **Excel/Power Query cleaning pass** — làm sạch dữ liệu thô trước khi đưa vào model (kiểm lỗi, duplicate, missing value, chuẩn hóa text/case, tạo sẵn cột `Total Fee`).
 - **Power BI semantic model tối giản** — star-schema 1 fact + 2 dimension, 23 DAX measure và 3 calculated column, không thêm bảng/cột không cần thiết.
-- **5-page Power BI report + phân tích nghiệp vụ đa chiều có AI hỗ trợ** — đi từ "đọc số trên chart" sang "tìm nguyên nhân → đánh giá tác động tích cực/tiêu cực → khuyến nghị hành động cụ thể → KPI theo dõi", kiểm chứng bằng query DAX trực tiếp trên model sống thay vì suy diễn từ một biểu đồ.
+- **5-page Power BI report + phân tích nghiệp vụ đa chiều có AI hỗ trợ** — đi từ "đọc số trên chart" sang "tìm nguyên nhân → đánh giá tác động tích cực/tiêu cực → khuyến nghị hành động cụ thể → KPI theo dõi", kiểm chứng bằng query DAX trực tiếp trên model sống.
 
 ```text
 Excel export (20.000 dòng, 1 file duy nhất)
@@ -122,7 +116,7 @@ Nhóm theo mục đích: Core KPI (8) · Fee Breakdown (3) · Time Intelligence 
 
 ### Report (PBIR)
 
-Canvas 1600×900. Mỗi trang gồm: sidebar filter (Date, Segment, Product, Channel, Branch, Currency single-select) + KPI row + lưới 6 chart/table được **đo kích thước riêng theo số category** (không dùng grid đều) để không chart nào bị ẩn dữ liệu sau thanh cuộn. Drill-down Year→Month ở mọi trend chart, tooltip mở rộng ở các chart quan trọng.
+Canvas ở độ phân giải 1600x900.  Mỗi trang gồm: sidebar filter (Date, Segment, Product, Channel, Branch, Currency single-select) + KPI row + lưới 6 chart/table được **đo kích thước riêng theo số category** (không dùng grid đều) để không chart nào bị ẩn dữ liệu sau thanh cuộn và có tooltip mở rộng ở các chart quan trọng.
 
 ### Phân tích nghiệp vụ (AI-assisted)
 
