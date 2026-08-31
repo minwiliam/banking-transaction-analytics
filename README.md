@@ -82,7 +82,7 @@ Insight chính (đã kiểm chứng bằng query DAX đa chiều, không dừng 
 | 6 | Sửa `CustomerScore` về đúng cấp khách hàng (1 khách = 1 điểm ổn định) ở tầng dữ liệu nguồn | Trung bình |
 | 7 | Theo dõi định kỳ (chưa cần hành động ngay) độ lệch kênh × sản phẩm — hiện đang rất cân bằng | Monitor |
 
-Mỗi khuyến nghị đều theo cấu trúc WHO/WHAT/WHERE/HOW/KPI và dùng ngôn ngữ có điều kiện ("có thể", "cân nhắc") — không cam kết kết quả cụ thể khi dữ liệu không đủ để tính.
+Mỗi khuyến nghị đều theo cấu trúc WHO/WHAT/WHERE/HOW/KPI và chỉ dùng ngôn ngữ có điều kiện ("có thể", "cân nhắc").
 
 ### Giới hạn cần nhớ
 
@@ -90,8 +90,7 @@ Mỗi khuyến nghị đều theo cấu trúc WHO/WHAT/WHERE/HOW/KPI và dùng n
 - Không có bảng tỷ giá EUR/USD → không gộp 2 loại tiền trong cùng 1 phép tính; dùng slicer single-select, mặc định EUR.
 - 2025 chỉ có 5 tháng đầu năm — mọi so sánh theo năm với 2025 đều ghi rõ là partial-year.
 - Không có field chi phí phục vụ (cost-to-serve) hay lợi nhuận theo khách hàng → không tính được ROI thực tế cho các khuyến nghị ở trên, chỉ định hướng được **chiều** tác động.
-- Dữ liệu chỉ mang tính quan sát (observational) — mọi kết luận nguyên nhân dùng ngôn ngữ có điều kiện ("có liên hệ với", "gợi ý rằng"), không khẳng định nhân quả.
-- Geographic map visual không được dùng dù `BranchLat`/`BranchLong` sạch — vì phụ thuộc dịch vụ geocoding/tile sống khó test ổn định trong môi trường build này; dùng bar chart/table thay thế.
+- Dữ liệu chỉ mang tính quan sát (observational) — mọi kết luận nguyên nhân dùng ngôn ngữ có điều kiện ("có liên hệ với", "gợi ý rằng"), không khẳng định kết quả
 
 ## 4. Luồng xử lý dữ liệu
 
