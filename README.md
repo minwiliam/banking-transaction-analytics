@@ -153,15 +153,9 @@ Nếu dùng dữ liệu khách hàng thật cho một project khác (không ph�
 ## 7. Guardrails phát triển
 
 Các nguyên tắc này bảo vệ khỏi những sự cố từng xảy ra thật trong lúc build:
-
-- Sau bất kỳ thay đổi DAX nào trong Power BI Desktop, luôn **export lại TMDL** (hoặc kiểm tra file `.tmdl` trên đĩa) để xác nhận measure đã được lưu — đã từng mất toàn bộ 22 measures vì chúng chỉ tồn tại trong phiên làm việc live.
-- Không tạo/giữ calculated column trùng ý nghĩa với cột có sẵn — `IncomeGroup` (nhóm theo `MonthlyIncome`) đã bị xoá vì trùng lặp hoàn toàn với `CustomerSegment`, giữ lại chỉ gây nhiễu khi phân tích.
 - Không `SUM(Amount)` gộp cả `EUR` và `USD` trong cùng 1 phép tính — luôn lọc theo `Currency` trước.
 - `CustomerScore`/`CreditScoreGroup` không được dùng làm cơ sở cho bất kỳ insight nào về hành vi khách hàng ổn định — field này ở cấp giao dịch, không phải cấp khách hàng.
 - `Total Fee` đã được tính sẵn ở Excel; không tính lại bằng DAX (đã verify diff = 0, tính lại chỉ tạo thêm rủi ro sai lệch).
-- Không viết insight theo kiểu nhân quả từ dữ liệu quan sát — dùng "có liên hệ với", "gợi ý rằng", "có thể do" thay vì "gây ra".
-- Mọi biểu đồ phải hiển thị đủ toàn bộ category, không được để dữ liệu ẩn sau thanh cuộn — ưu tiên chỉnh kích thước chart theo số lượng category thay vì grid đều.
-- Không thêm measure/visual mới nếu câu hỏi đã có thể trả lời bằng measure hiện có — kiểm tra trùng lặp trước khi tạo.
 
 ## 8. Định hướng phát triển và scale-up
 
