@@ -2,7 +2,7 @@
 
 Power BI dashboard 5 trang + phân tích nghiệp vụ đa chiều (multi-dimensional driver analysis) trên 20.000 giao dịch ngân hàng — đi từ làm sạch dữ liệu Excel, xây model, viết DAX, đến khuyến nghị hành động cụ thể được kiểm chứng bằng query trực tiếp trên model, có AI hỗ trợ.
 
-**Xem nhanh:** mở [`banking.pbix`](banking.pbix) bằng Power BI Desktop — dữ liệu đã nhúng sẵn, không cần setup gì thêm. Muốn xem cấu trúc model/report dạng file rời (TMDL/PBIR) để chỉnh sửa, dùng `banking.pbip` — xem Mục 6 (Cách setup).
+**Xem nhanh:** mở [`banking.pbix`](banking.pbix) bằng Power BI Desktop — dữ liệu đã nhúng sẵn, không cần setup gì thêm. Muốn xem cấu trúc model/report dạng file rời (TMDL/PBIR) để chỉnh sửa, dùng `banking.pbip` — xem Mục 6 (Cách setup). Không mở được Power BI Desktop? Xem ảnh chụp dashboard ở thư mục [`screenshots/`](screenshots/).
 
 ## 1. Bối cảnh vấn đề
 
