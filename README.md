@@ -18,13 +18,6 @@ Dữ liệu gốc là **một file Excel export duy nhất** — 20.000 dòng gi
 
 Nếu build thẳng dashboard trên dữ liệu thô, các con số như tổng doanh thu, fee rate theo phân khúc hay "kênh nào tốt nhất" vẫn trông hợp lý — nhưng sai bản chất, hoặc tệ hơn là suy diễn nhân quả (causal) từ dữ liệu chỉ mang tính quan sát (correlation).
 
-Ngoài vấn đề dữ liệu, quá trình build còn gặp 2 sự cố vận hành đáng ghi lại vì có thể lặp lại với bất kỳ ai dùng Power BI Desktop dài ngày cho một project:
-
-- **Mất toàn bộ 22 DAX measures sau khi restart Desktop** — do measure được tạo qua phiên làm việc live (MCP) nhưng chưa từng được ghi lại vào file model (TMDL) trên đĩa.
-- **Power BI Desktop tự động "sửa" một calculated column bị lỗi bằng cách âm thầm xóa nó**, đồng thời rebind một visual đang dùng cột đó sang cột khác (`IncomeGroup` → `CustomerSegment`) mà không hiển thị cảnh báo nào.
-
-Cả hai không phải lỗi dữ liệu, mà là rủi ro thật của quy trình làm việc — được ghi lại thành guardrail ở Mục 7.
-
 ## 2. Solution này là gì
 
 Solution gồm ba phần:
@@ -132,7 +125,7 @@ Nhóm theo mục đích: Core KPI (8) · Fee Breakdown (3) · Time Intelligence 
 
 ### Report (PBIR)
 
-Canvas 1600×900. Mỗi trang gồm: sidebar filter (Date, Segment, Product, Channel, Branch, Currency single-select) + KPI row + lưới 6 chart/table được **đo kích thước riêng theo số category** (không dùng grid đều) để không chart nào bị ẩn dữ liệu sau thanh cuộn. Drill-down Year→Month ở mọi trend chart, tooltip mở rộng ở các chart quan trọng.
+Canvas ở độ phân giải 1600x900.  Mỗi trang gồm: sidebar filter (Date, Segment, Product, Channel, Branch, Currency single-select) + KPI row + lưới 6 chart/table được **đo kích thước riêng theo số category** (không dùng grid đều) để không chart nào bị ẩn dữ liệu sau thanh cuộn và có tooltip mở rộng ở các chart quan trọng.
 
 ### Phân tích nghiệp vụ (AI-assisted)
 
