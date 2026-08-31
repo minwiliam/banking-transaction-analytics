@@ -178,3 +178,4 @@ Các nguyên tắc này bảo vệ khỏi những sự cố từng xảy ra th�
 - Power BI refresh định kỳ → AI tóm tắt biến động KPI theo kỳ → gửi báo cáo tự động.
 - Review mọi khuyến nghị nghiệp vụ hoặc hành động liên quan phí/giá/tiếp cận khách hàng trước khi triển khai.
 
+Mọi mở rộng phải giữ nguyên nguyên tắc: metric tính đúng ở DAX measure, insight luôn tách rõ observation khỏi diễn giải nguyên nhân, và không để BI tool tự suy diễn lại logic nghiệp vụ.
