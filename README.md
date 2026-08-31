@@ -30,8 +30,8 @@ Cả hai không phải lỗi dữ liệu, mà là rủi ro thật của quy trì
 Solution gồm ba phần:
 
 - **Excel/Power Query cleaning pass** — làm sạch dữ liệu thô trước khi đưa vào model (kiểm lỗi, duplicate, missing value, chuẩn hóa text/case, tạo sẵn cột `Total Fee`).
-- **Power BI semantic model tối giản** — star-schema 1 fact + 2 dimension, 23 DAX measure và 4 calculated column, không thêm bảng/cột không cần thiết.
-- **5-page Power BI report + phân tích nghiệp vụ đa chiều có AI hỗ trợ** — đi từ "đọc số trên chart" sang "tìm nguyên nhân → đánh giá tác động tích cực/tiêu cực → khuyến nghị hành động cụ thể → KPI theo dõi", kiểm chứng bằng query DAX trực tiếp trên model sống thay vì suy diễn từ một biểu đồ.
+- **Power BI semantic model tối giản** — star-schema 1 fact + 2 dimension, 23 DAX measure và 4 calculated column
+- **5-page Power BI report + phân tích nghiệp vụ đa chiều có AI hỗ trợ** — đi từ "đọc số trên chart" sang "tìm nguyên nhân → đánh giá tác động tích cực/tiêu cực → khuyến nghị hành động cụ thể → KPI theo dõi", kiểm chứng bằng query DAX trực tiếp trên model sống.
 
 ```text
 Excel export (20.000 dòng, 1 file duy nhất)
