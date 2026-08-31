@@ -1,6 +1,6 @@
 # Banking Transaction Analytics — Power BI Reporting & Phân tích nghiệp vụ đa chiều
 
-Power BI dashboard 5 trang + phân tích nghiệp vụ đa chiều (multi-dimensional driver analysis) trên 20.000 giao dịch ngân hàng — đi từ làm sạch dữ liệu Excel, xây model, viết DAX, đến khuyến nghị hành động cụ thể được kiểm chứng bằng query trực tiếp trên model, có AI hỗ trợ.
+Power BI dashboard 5 trang + phân tích nghiệp vụ đa chiều (multi-dimensional driver analysis) trên 20.000 giao dịch ngân hàng — đi từ làm sạch dữ liệu Excel, xây model, viết DAX, đến khuyến nghị hành động cụ thể, với các insight quan trọng nhất được kiểm chứng thêm bằng query DAX trực tiếp trên model, có AI hỗ trợ.
 
 **Xem nhanh:** mở [`banking.pbix`](banking.pbix) bằng Power BI Desktop — dữ liệu đã nhúng sẵn, không cần setup gì thêm. Muốn xem cấu trúc model/report dạng file rời (TMDL/PBIR) để chỉnh sửa, dùng `banking.pbip` — xem Mục 6 (Cách setup). Không mở được Power BI Desktop? Xem ảnh chụp dashboard ở thư mục [`screenshots/`](screenshots/).
 
@@ -24,7 +24,7 @@ Solution gồm ba phần:
 
 - **Excel/Power Query cleaning pass** — làm sạch dữ liệu thô trước khi đưa vào model (kiểm lỗi, duplicate, missing value, chuẩn hóa text/case, tạo sẵn cột `Total Fee`).
 - **Power BI semantic model tối giản** — star-schema 1 fact + 2 dimension, 23 DAX measure và 3 calculated column, không thêm bảng/cột không cần thiết.
-- **5-page Power BI report + phân tích nghiệp vụ đa chiều có AI hỗ trợ** — đi từ "đọc số trên chart" sang "tìm nguyên nhân → đánh giá tác động tích cực/tiêu cực → khuyến nghị hành động cụ thể → KPI theo dõi", kiểm chứng bằng query DAX trực tiếp trên model sống.
+- **5-page Power BI report + phân tích nghiệp vụ đa chiều có AI hỗ trợ** — đi từ "đọc số trên chart" sang "tìm nguyên nhân → đánh giá tác động tích cực/tiêu cực → khuyến nghị hành động cụ thể → KPI theo dõi"; các insight quan trọng nhất được kiểm chứng thêm bằng query DAX trực tiếp trên model sống.
 
 ```text
 Excel export (20.000 dòng, 1 file duy nhất)
@@ -119,7 +119,7 @@ Canvas ở độ phân giải 1600x900.  Mỗi trang gồm: sidebar filter (Date
 
 ### Phân tích nghiệp vụ (AI-assisted)
 
-Mọi insight ở Mục 3 đều bắt nguồn từ một query DAX cross-tab đa chiều (Segment × Type × Channel × Product × Time) chạy trực tiếp trên model sống qua MCP, không suy diễn từ một chart đơn lẻ. Observation luôn được tách rõ khỏi diễn giải nguyên nhân.
+Các insight chính ở Mục 3 được kiểm chứng bằng query DAX cross-tab đa chiều (Segment × Type × Channel × Product × Time) chạy trực tiếp trên model sống qua MCP — một số con số headline (Fee Rate %, tổng phí theo loại giao dịch, tỷ lệ khớp offer theo từng offer) đọc trực tiếp từ chart có sẵn trên dashboard; phần phân tích nguyên nhân sâu hơn (driver) mới dựa trên cross-tab vượt ngoài phạm vi 1 chart đơn lẻ. Observation luôn được tách rõ khỏi diễn giải nguyên nhân.
 
 ## 5. Schema dữ liệu
 
