@@ -23,11 +23,11 @@
                       "Entity": "FactTransaction"
                     }
                   },
-                  "Property": "IncomeGroup"
+                  "Property": "CustomerSegment"
                 }
               },
-              "queryRef": "FactTransaction.IncomeGroup",
-              "nativeQueryRef": "IncomeGroup",
+              "queryRef": "FactTransaction.CustomerSegment",
+              "nativeQueryRef": "CustomerSegment",
               "active": true
             }
           ]
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Income Group Summary'"
+                  "Value": "'Customer Segment Summary'"
                 }
               }
             },
@@ -169,5 +169,51 @@
         }
       ]
     }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "17e372cc5cb45b78448e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactTransaction"
+              }
+            },
+            "Property": "Total Transactions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3861e49fd6b28918193f",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactTransaction"
+              }
+            },
+            "Property": "Total Transaction Value"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "755d002ce36d1fd93b79",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactTransaction"
+              }
+            },
+            "Property": "Total Fees"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

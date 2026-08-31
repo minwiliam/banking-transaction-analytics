@@ -4,97 +4,120 @@ table FactTransaction
 	measure 'Total Transactions' = COUNTROWS(FactTransaction)
 		formatString: #,##0
 		displayFolder: Core KPIs
+		lineageTag: fb3537a3-7f7c-4774-86fa-8c637520aa52
 
 	measure 'Total Transaction Value' = SUM(FactTransaction[Amount])
 		formatString: #,##0
 		displayFolder: Core KPIs
+		lineageTag: 1fe93d05-4033-4fdb-b07e-232b574ab4b1
 
 	measure 'Total Fees' = SUM(FactTransaction[Total Fee])
 		formatString: #,##0
 		displayFolder: Core KPIs
+		lineageTag: 6ef18cab-2eaf-446d-9c33-dbd4b3f8ed8e
 
 	measure 'Average Transaction Value' = DIVIDE([Total Transaction Value], [Total Transactions])
 		formatString: #,##0.00
 		displayFolder: Core KPIs
+		lineageTag: f4948acb-0b85-45bd-917b-046d0eb4e54f
 
 	measure 'Average Fee' = DIVIDE([Total Fees], [Total Transactions])
 		formatString: #,##0.00
 		displayFolder: Core KPIs
+		lineageTag: 1f5db2e6-a4c9-46d8-a5a5-1e2661d3eb69
 
 	measure 'Active Customers' = DISTINCTCOUNT(FactTransaction[CustomerID])
 		formatString: #,##0
 		displayFolder: Core KPIs
+		lineageTag: 145b59bb-e463-4f6c-90c9-f56aea043dfe
 
 	measure 'Transactions per Customer' = DIVIDE([Total Transactions], [Active Customers])
 		formatString: #,##0.0
 		displayFolder: Core KPIs
+		lineageTag: 71ba7ef3-7d20-4d17-8cd8-6d3148dcc73b
 
 	measure 'Average Customer Score' = AVERAGE(FactTransaction[CustomerScore])
 		formatString: #,##0
 		displayFolder: Core KPIs
+		lineageTag: 7b270412-f766-42ce-9446-c20f1e1d172a
 
 	measure 'Credit Card Fees' = SUM(FactTransaction[CreditCardFees])
 		formatString: #,##0
 		displayFolder: Fee Breakdown
+		lineageTag: 805701a4-f9ff-4b4a-9cb2-6b3359aa9626
 
 	measure 'Insurance Fees' = SUM(FactTransaction[InsuranceFees])
 		formatString: #,##0
 		displayFolder: Fee Breakdown
+		lineageTag: db0a592f-02ab-42d9-952f-25052d9ae1d9
 
 	measure 'Late Payment Amount' = SUM(FactTransaction[LatePaymentAmount])
 		formatString: #,##0
 		displayFolder: Fee Breakdown
+		lineageTag: b3d191ad-3d5e-424a-9a42-e229749ed971
 
 	measure 'Total Transaction Value PM' = CALCULATE([Total Transaction Value], DATEADD(DimDate[Date], -1, MONTH))
 		formatString: #,##0
 		isHidden
 		displayFolder: Time Intelligence\Helpers
+		lineageTag: 92ea071a-e4af-43ad-9412-035222e1547f
 
 	measure 'Total Transaction Value PY' = CALCULATE([Total Transaction Value], SAMEPERIODLASTYEAR(DimDate[Date]))
 		formatString: #,##0
 		isHidden
 		displayFolder: Time Intelligence\Helpers
+		lineageTag: 94a5dfaa-23b8-43de-b37a-d608f53dcd20
 
 	measure 'Transactions PM' = CALCULATE([Total Transactions], DATEADD(DimDate[Date], -1, MONTH))
 		formatString: #,##0
 		isHidden
 		displayFolder: Time Intelligence\Helpers
+		lineageTag: 11697fd6-e27a-4705-b535-2fe36c0ef24b
 
 	measure 'MoM Growth %' = DIVIDE([Total Transaction Value] - [Total Transaction Value PM], [Total Transaction Value PM])
 		formatString: +0.0%;-0.0%;0.0%
 		displayFolder: Time Intelligence
+		lineageTag: fdfce7c3-feea-44e3-944a-caad1db78eb0
 
 	measure 'YoY Growth %' = DIVIDE([Total Transaction Value] - [Total Transaction Value PY], [Total Transaction Value PY])
 		formatString: +0.0%;-0.0%;0.0%
 		displayFolder: Time Intelligence
+		lineageTag: d4730ef0-5d48-4b17-942a-85a9ca5f0b52
 
 	measure 'Transaction Growth %' = DIVIDE([Total Transactions] - [Transactions PM], [Transactions PM])
 		formatString: +0.0%;-0.0%;0.0%
 		displayFolder: Time Intelligence
+		lineageTag: a4fa1522-7bef-47be-8851-8d3191c66228
 
 	measure 'Fee Rate %' = DIVIDE([Total Fees], [Total Transaction Value])
 		formatString: 0.00%
 		displayFolder: Analytical %
+		lineageTag: 21bd7b0f-5d19-42f1-96e9-f43690de4208
 
 	measure 'Fee Contribution %' = DIVIDE([Total Fees], CALCULATE([Total Fees], ALLSELECTED(FactTransaction)))
 		formatString: 0.0%
 		displayFolder: Analytical %
+		lineageTag: 4aa9b66c-17d1-4c0e-a036-ebe5c367977d
 
 	measure 'Transaction Share %' = DIVIDE([Total Transactions], CALCULATE([Total Transactions], ALLSELECTED(FactTransaction)))
 		formatString: 0.0%
 		displayFolder: Analytical %
+		lineageTag: 78980550-4509-4b9b-b03d-493abc290ba9
 
 	measure 'Offer Alignment Rate %' = AVERAGE(FactTransaction[OfferAligned])
 		formatString: 0.0%
 		displayFolder: Analytical %
+		lineageTag: 01a241eb-1b00-41a1-a001-3f7d16a48816
 
 	measure 'Most Used Channel' = VAR t = TOPN(1, VALUES(FactTransaction[Channel]), CALCULATE([Total Transactions]), DESC) RETURN CONCATENATEX(t, FactTransaction[Channel])
 		formatString: General
 		displayFolder: Convenience
+		lineageTag: 6577ba23-19e7-47a3-9753-3dd7026a0f33
 
 	measure 'Most Valuable Transaction Type' = VAR t = TOPN(1, VALUES(FactTransaction[TransactionType]), CALCULATE([Total Transaction Value]), DESC) RETURN CONCATENATEX(t, FactTransaction[TransactionType])
 		formatString: General
 		displayFolder: Convenience
+		lineageTag: 9e220f5e-a65b-4b8c-8887-efa102930fb1
 
 	column CustomerID
 		dataType: int64
@@ -270,10 +293,6 @@ table FactTransaction
 	column CreditScoreGroup = SWITCH(TRUE(), FactTransaction[CustomerScore] < 580, "Poor", FactTransaction[CustomerScore] < 670, "Fair", FactTransaction[CustomerScore] < 740, "Good", FactTransaction[CustomerScore] < 800, "Very Good", "Excellent")
 		dataType: string
 		lineageTag: e2f5e8b2-d863-4c2e-8956-c32b086457e0
-
-	column IncomeGroup = SWITCH(TRUE(), FactTransaction[MonthlyIncome] < 3500, "Low Income", FactTransaction[MonthlyIncome] < 7000, "Middle Income", "High Income")
-		dataType: string
-		lineageTag: 43e93a1d-14f1-4fc6-a436-91339fe0323c
 
 	column OfferExpectedCategory = RELATED(MapOfferCategory[ExpectedCategory])
 		dataType: string

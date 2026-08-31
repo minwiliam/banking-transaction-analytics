@@ -2,7 +2,7 @@
 
 Power BI dashboard 5 trang + phân tích nghiệp vụ đa chiều (multi-dimensional driver analysis) trên 20.000 giao dịch ngân hàng — đi từ làm sạch dữ liệu Excel, xây model, viết DAX, đến khuyến nghị hành động cụ thể được kiểm chứng bằng query trực tiếp trên model, có AI hỗ trợ.
 
-Ảnh chụp dashboard: xem thư mục [`screenshots/`](screenshots/) hoặc Mục 3 bên dưới.
+Mở `banking.pbip` bằng Power BI Desktop để xem dashboard đầy đủ — xem Mục 6 (Cách setup) để biết cách trỏ lại nguồn dữ liệu.
 
 ## 1. Bối cảnh vấn đề
 
@@ -18,19 +18,18 @@ Dữ liệu gốc là **một file Excel export duy nhất** — 20.000 dòng gi
 
 Nếu build thẳng dashboard trên dữ liệu thô, các con số như tổng doanh thu, fee rate theo phân khúc hay "kênh nào tốt nhất" vẫn trông hợp lý — nhưng sai bản chất, hoặc tệ hơn là suy diễn nhân quả (causal) từ dữ liệu chỉ mang tính quan sát (correlation).
 
-Ngoài vấn đề dữ liệu, quá trình build còn gặp 2 sự cố vận hành đáng ghi lại vì có thể lặp lại với bất kỳ ai dùng Power BI Desktop dài ngày cho một project:
+Ngoài vấn đề dữ liệu, quá trình build còn gặp 1 sự cố vận hành đáng ghi lại vì có thể lặp lại với bất kỳ ai dùng Power BI Desktop dài ngày cho một project:
 
 - **Mất toàn bộ 22 DAX measures sau khi restart Desktop** — do measure được tạo qua phiên làm việc live (MCP) nhưng chưa từng được ghi lại vào file model (TMDL) trên đĩa.
-- **Power BI Desktop tự động "sửa" một calculated column bị lỗi bằng cách âm thầm xóa nó**, đồng thời rebind một visual đang dùng cột đó sang cột khác (`IncomeGroup` → `CustomerSegment`) mà không hiển thị cảnh báo nào.
 
-Cả hai không phải lỗi dữ liệu, mà là rủi ro thật của quy trình làm việc — được ghi lại thành guardrail ở Mục 7.
+Đây không phải lỗi dữ liệu, mà là rủi ro thật của quy trình làm việc — được ghi lại thành guardrail ở Mục 7.
 
 ## 2. Solution này là gì
 
 Solution gồm ba phần:
 
 - **Excel/Power Query cleaning pass** — làm sạch dữ liệu thô trước khi đưa vào model (kiểm lỗi, duplicate, missing value, chuẩn hóa text/case, tạo sẵn cột `Total Fee`).
-- **Power BI semantic model tối giản** — star-schema 1 fact + 2 dimension, 23 DAX measure và 4 calculated column, không thêm bảng/cột không cần thiết.
+- **Power BI semantic model tối giản** — star-schema 1 fact + 2 dimension, 23 DAX measure và 3 calculated column, không thêm bảng/cột không cần thiết.
 - **5-page Power BI report + phân tích nghiệp vụ đa chiều có AI hỗ trợ** — đi từ "đọc số trên chart" sang "tìm nguyên nhân → đánh giá tác động tích cực/tiêu cực → khuyến nghị hành động cụ thể → KPI theo dõi", kiểm chứng bằng query DAX trực tiếp trên model sống thay vì suy diễn từ một biểu đồ.
 
 ```text
@@ -43,7 +42,7 @@ Excel / Power Query
              ▼
 Power BI Semantic Model (TMDL)
  MapOfferCategory (1) ──< FactTransaction (20.000 dòng) >── (1) DimDate
- 23 DAX measures · 4 calculated columns
+ 23 DAX measures · 3 calculated columns
              │
              ▼
 Power BI Report (PBIR) — 5 trang
@@ -58,15 +57,6 @@ Phân tích nghiệp vụ đa chiều (AI-assisted, qua MCP)
 Metric được tính đúng cấp dữ liệu ngay trong DAX measure (`Fee Rate %`, `Offer Alignment Rate %`, `MoM/YoY Growth %`…), không để Power BI tự cộng lại tỷ lệ hay % tăng trưởng từ visual.
 
 ## 3. Kết quả và insights
-
-| | |
-|---|---|
-| ![Executive Overview](screenshots/page1-executive-overview.png) | ![Customer & Segment Analytics](screenshots/page2-customer-segment.png) |
-| **Trang 1 — Executive Overview** | **Trang 2 — Customer & Segment Analytics** |
-| ![Transaction & Channel](screenshots/page3-transaction-channel.png) | ![Revenue & Friction](screenshots/page4-revenue-friction.png) |
-| **Trang 3 — Transaction & Channel** | **Trang 4 — Revenue & Friction** |
-| ![Trend & Offer](screenshots/page5-trend-offer.png) | |
-| **Trang 5 — Trend & Offer** | |
 
 | Chỉ số (view mặc định: EUR) | Kết quả |
 |---|---:|
@@ -124,7 +114,7 @@ Mỗi khuyến nghị đều theo cấu trúc WHO/WHAT/WHERE/HOW/KPI và dùng n
 
 ### Data Model (Power BI)
 
-`MapOfferCategory (1) ──< FactTransaction (20.000 dòng) >── (1) DimDate`. `FactTransaction` giữ nguyên grain 1 dòng/giao dịch; `DimDate` là bảng lịch calculated đảm bảo liên tục không thiếu ngày; 4 calculated column (`CreditScoreGroup`, `IncomeGroup`, `OfferExpectedCategory`, `OfferAligned`).
+`MapOfferCategory (1) ──< FactTransaction (20.000 dòng) >── (1) DimDate`. `FactTransaction` giữ nguyên grain 1 dòng/giao dịch; `DimDate` là bảng lịch calculated đảm bảo liên tục không thiếu ngày; 3 calculated column (`CreditScoreGroup`, `OfferExpectedCategory`, `OfferAligned`). Model từng có thêm `IncomeGroup` (nhóm theo `MonthlyIncome`) nhưng đã bị xoá vì trùng lặp hoàn toàn với `CustomerSegment` — giữ lại chỉ gây nhiễu khi phân tích.
 
 ### DAX Measures (23)
 
@@ -173,7 +163,7 @@ Không commit file Excel nguồn hoặc dữ liệu khách hàng thật lên git
 Các nguyên tắc này bảo vệ khỏi những sự cố từng xảy ra thật trong lúc build:
 
 - Sau bất kỳ thay đổi DAX nào trong Power BI Desktop, luôn **export lại TMDL** (hoặc kiểm tra file `.tmdl` trên đĩa) để xác nhận measure đã được lưu — đã từng mất toàn bộ 22 measures vì chúng chỉ tồn tại trong phiên làm việc live.
-- Sau mỗi lần Desktop tự động lưu, **diff lại calculated column và visual binding** — đã từng có trường hợp `IncomeGroup` bị xóa âm thầm và một visual bị rebind sang `CustomerSegment` mà không có cảnh báo.
+- Không tạo/giữ calculated column trùng ý nghĩa với cột có sẵn — `IncomeGroup` (nhóm theo `MonthlyIncome`) đã bị xoá vì trùng lặp hoàn toàn với `CustomerSegment`, giữ lại chỉ gây nhiễu khi phân tích.
 - Không `SUM(Amount)` gộp cả `EUR` và `USD` trong cùng 1 phép tính — luôn lọc theo `Currency` trước.
 - `CustomerScore`/`CreditScoreGroup` không được dùng làm cơ sở cho bất kỳ insight nào về hành vi khách hàng ổn định — field này ở cấp giao dịch, không phải cấp khách hàng.
 - `Total Fee` đã được tính sẵn ở Excel; không tính lại bằng DAX (đã verify diff = 0, tính lại chỉ tạo thêm rủi ro sai lệch).
