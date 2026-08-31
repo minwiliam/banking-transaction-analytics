@@ -124,7 +124,7 @@ Mọi insight ở Mục 3 đều bắt nguồn từ một query DAX cross-tab đ
 
 ## 5. Schema dữ liệu
 
-**Input** (file Excel gốc): `TransactionID, CustomerID, TransactionDate, Amount, TransactionType, ProductCategory, ProductSubcategory, BranchCity, BranchLat, BranchLong, Channel, Currency, CreditCardFees, InsuranceFees, LatePaymentAmount, CustomerScore, MonthlyIncome, CustomerSegment, RecommendedOffer, Total Fee` (các cột lịch gốc bị loại khi load vì đã có `DimDate` thay thế).
+**Input** (file Excel gốc, [`data/Banking_Transactional_Dataset_Cleaned.xlsx`](data/Banking_Transactional_Dataset_Cleaned.xlsx)): `TransactionID, CustomerID, TransactionDate, Amount, TransactionType, ProductCategory, ProductSubcategory, BranchCity, BranchLat, BranchLong, Channel, Currency, CreditCardFees, InsuranceFees, LatePaymentAmount, CustomerScore, MonthlyIncome, CustomerSegment, RecommendedOffer, Total Fee` (các cột lịch gốc bị loại khi load vì đã có `DimDate` thay thế).
 
 **Output** (Power BI model):
 
@@ -138,19 +138,18 @@ Mọi insight ở Mục 3 đều bắt nguồn từ một query DAX cross-tab đ
 
 Yêu cầu **Power BI Desktop** bản hỗ trợ định dạng PBIP (Power BI Project).
 
-> **Lưu ý:** file Excel nguồn (`Banking_Transactional_Dataset_Cleaned.xlsx`) **không nằm trong repo này** — Power Query hiện đang trỏ tới một đường dẫn cục bộ (`C:\Users\...\Downloads\...`) trên máy dùng để build project. Đây là dữ liệu tổng hợp/giả lập (synthetic), không phải dữ liệu khách hàng thật, nhưng chưa được đóng gói kèm repo. Nếu clone repo về, bước 2 dưới đây **sẽ báo lỗi refresh cho tới khi bạn trỏ lại đường dẫn**.
+> **Lưu ý:** file Excel nguồn đã làm sạch (**[`data/Banking_Transactional_Dataset_Cleaned.xlsx`](data/Banking_Transactional_Dataset_Cleaned.xlsx)**) được đóng gói kèm repo — đây là dữ liệu tổng hợp/giả lập (synthetic), không phải dữ liệu khách hàng thật, nên an toàn để public. Power Query trong model hiện vẫn đang trỏ tới đường dẫn cục bộ trên máy dùng để build project (`C:\Users\...\Downloads\...`), nên sau khi clone, bước 2 dưới đây **sẽ báo lỗi refresh cho tới khi bạn trỏ lại đường dẫn** — trỏ về đúng file đã có sẵn trong `data/`.
 
 ```text
 1. Mở banking.pbip bằng Power BI Desktop
-2. Trỏ lại nguồn dữ liệu về file Excel của bạn:
+2. Trỏ lại nguồn dữ liệu về file Excel trong repo:
    Transform Data → Data source settings → chọn nguồn Excel → Change Source…
-   → trỏ tới bản sao Banking_Transactional_Dataset_Cleaned.xlsx trên máy bạn
-   (cần đủ 19 cột đúng tên như liệt kê ở Mục 5 — Input)
+   → trỏ tới data/Banking_Transactional_Dataset_Cleaned.xlsx (nằm ngay trong repo đã clone)
 3. Refresh model (Home → Refresh)
 4. Ở mỗi trang, chọn Currency = EUR (mặc định) trước khi đọc số — không chọn cả EUR lẫn USD cùng lúc
 ```
 
-Không commit file Excel nguồn hoặc dữ liệu khách hàng thật lên git nếu repo public. Dataset dùng trong project này là dữ liệu tổng hợp (synthetic), nhưng nguyên tắc này nên giữ cho mọi lần tái sử dụng workflow với dữ liệu thật.
+Nếu dùng dữ liệu khách hàng thật cho một project khác (không phải bản demo này), không commit file Excel nguồn hoặc dữ liệu khách hàng thật lên git nếu repo public.
 
 ## 7. Guardrails phát triển
 
