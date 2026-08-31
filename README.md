@@ -2,7 +2,7 @@
 
 Power BI dashboard 5 trang + phân tích nghiệp vụ đa chiều (multi-dimensional driver analysis) trên 20.000 giao dịch ngân hàng — đi từ làm sạch dữ liệu Excel, xây model, viết DAX, đến khuyến nghị hành động cụ thể được kiểm chứng bằng query trực tiếp trên model, có AI hỗ trợ.
 
-Ảnh chụp dashboard: xem thư mục [`screenshots/`](screenshots/) hoặc Mục 3 bên dưới.
+Ảnh chụp dashboard ở thư mục [`screenshots/`](screenshots/) hoặc Mục 3 bên dưới.
 
 ## 1. Bối cảnh vấn đề
 
