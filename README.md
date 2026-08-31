@@ -61,7 +61,7 @@ Metric được tính đúng cấp dữ liệu ngay trong DAX measure (`Fee Rate
 | Khách hàng hoạt động | **~8.000** |
 | Giá trị giao dịch trung bình | **~5.050 €** |
 
-Insight chính (đã kiểm chứng bằng query DAX đa chiều, không dừng ở "đọc số trên 1 chart"):
+Insight chính:
 
 - **Middle Income dẫn đầu mọi KPI — nhưng vì có nhiều khách hàng hơn, không phải vì giao dịch giá trị lớn hơn.** Giá trị giao dịch trung bình gần như bằng nhau ở mọi phân khúc/kênh/loại giao dịch/sản phẩm (4.840€–5.286€). Thứ thật sự khác: số khách hoạt động (Middle 5.111 so với High 4.135, Low 3.112 — nhiều hơn Low Income tới **64%**) và tần suất giao dịch/khách (1,47 so với 1,37 và 1,23).
 - **Không có rủi ro tập trung ở bất kỳ tổ hợp kênh × sản phẩm × loại giao dịch nào** — mọi tổ hợp được test đều chênh lệch dưới 20%, giá trị giao dịch trung bình theo kênh chỉ chênh ~2% (5.022€–5.133€).
@@ -186,11 +186,6 @@ Các nguyên tắc này bảo vệ khỏi những sự cố từng xảy ra th�
 ### Giai đoạn 3 — Tự động hóa báo cáo
 
 - Power BI refresh định kỳ → AI tóm tắt biến động KPI theo kỳ → gửi báo cáo tự động.
-- Con người vẫn phải review mọi khuyến nghị nghiệp vụ hoặc hành động liên quan phí/giá/tiếp cận khách hàng trước khi triển khai.
-
-### Giai đoạn 4 — Scale hạ tầng nếu dữ liệu lớn hơn
-
-- Nếu vượt quy mô phù hợp với một file Excel, chuyển nguồn sang data warehouse (Fabric/BigQuery…).
-- Bổ sung cost-to-serve, lợi nhuận theo khách hàng, và data lineage khi model phức tạp hơn.
+- Review mọi khuyến nghị nghiệp vụ hoặc hành động liên quan phí/giá/tiếp cận khách hàng trước khi triển khai.
 
 Mọi mở rộng phải giữ nguyên nguyên tắc: metric tính đúng ở DAX measure, insight luôn tách rõ observation khỏi diễn giải nguyên nhân, và không để BI tool tự suy diễn lại logic nghiệp vụ.
